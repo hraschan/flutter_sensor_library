@@ -1,7 +1,4 @@
-library sensor_libary;
-
-import 'dart:ffi';
-
+library sensor_library;
 /// A Calculator.
 class Calculator {
   /// Returns [value] plus 1.
@@ -10,6 +7,3 @@ class Calculator {
   int resetValue() => 0;
 }
 
-class Barometer {
-  double getPressure() => 12312.76;
-}

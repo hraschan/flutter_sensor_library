@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sensor_library/sensor_library.dart';
 
-import 'package:sensor_libary/sensor_libary.dart';
 
 void main() {
   test('adds one to input values', () {
