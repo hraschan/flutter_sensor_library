@@ -1,0 +1,3 @@
+enum LengthUnit {
+  meter, imperial
+}
