@@ -13,7 +13,7 @@ class Position extends TimeSeries {
 
   @override
   startTracking(int inMillis) {
-    barometer.startTracking(inMillis);
+    // barometer.startTracking(inMillis);
   }
 
   Direction getCurrentDirection() {
@@ -30,6 +30,7 @@ class Position extends TimeSeries {
 
   Future<double> getAltitute(LengthUnit unit) async {
     var rawData = await barometer.getRaw();
-    return rawData;
+    return rawData.hectpascal;
+    // return rawData;
   }
 }
