@@ -28,8 +28,8 @@ class Position extends TimeSeries {
     return 345;
   }
 
-  double getAltitute(LengthUnit unit)  {
-    var rawData =  barometer.getRaw();
+  Future<double> getAltitute(LengthUnit unit) async {
+    var rawData = await barometer.getRaw().last;
     return rawData.hectpascal;
     // return rawData;
   }

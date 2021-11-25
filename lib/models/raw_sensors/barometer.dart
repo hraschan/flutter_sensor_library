@@ -3,14 +3,11 @@ import 'package:flutter_barometer_plugin/flutter_barometer.dart';
 import 'sensor.dart';
 
 class Barometer extends Sensor {
-  @override
-  BarometerValue getRaw()  {
-    late BarometerValue rawData;
-    FlutterBarometer.currentPressureEvent.listen((event) {
-      rawData = event;
-    });
+  
+   @override
+   Stream<BarometerValue> getRaw()  {
+    return FlutterBarometer.currentPressureEvent;
 
-    return rawData;
   }
 
   // @override
