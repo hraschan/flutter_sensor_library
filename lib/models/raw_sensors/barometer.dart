@@ -4,9 +4,13 @@ import 'sensor.dart';
 
 class Barometer extends Sensor {
   @override
-  Future<BarometerValue> getRaw() async {
+  BarometerValue getRaw()  {
     late BarometerValue rawData;
-    return await FlutterBarometer.currentPressure;
+    FlutterBarometer.currentPressureEvent.listen((event) {
+      rawData = event;
+    });
+
+    return rawData;
   }
 
   // @override
