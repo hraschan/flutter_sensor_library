@@ -1,7 +1,6 @@
 import 'package:flutter_barometer_plugin/flutter_barometer.dart';
 
 import 'sensor.dart';
-import 'package:barometer_plugin/barometer_plugin.dart';
 
 class Barometer extends Sensor {
   @override
