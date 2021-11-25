@@ -7,7 +7,6 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  barometer_plugin: ^0.0.2
   flutter:
     sdk: flutter
   flutter_barometer_plugin: ^0.0.1+3

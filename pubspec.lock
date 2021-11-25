@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.1"
-  barometer_plugin:
-    dependency: "direct main"
-    description:
-      name: barometer_plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
   boolean_selector:
     dependency: transitive
     description:
