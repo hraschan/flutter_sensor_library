@@ -1,13 +1,25 @@
 import 'package:sensor_library/models/enums/length_unit.dart';
+import 'package:sensor_library/models/raw_sensors/accelerometer.dart';
 import 'package:sensor_library/models/return_types/movement_type.dart';
 import 'package:sensor_library/models/return_types/sensor_vector_3.dart';
-import 'package:sensor_library/models/sensors/sensor.dart';
-import 'package:sensor_library/models/value_interpret/sensor_type.dart';
+import 'package:sensor_library/models/time_series.dart';
 
-class Movement extends SensorType {
-  void setTransformValue(double relativeNull){}
+class Movement extends TimeSeries {
+  
+  late Accelerometer  accelerometer;
+
+  @override
+  startTracking(int inMillis) {
+    accelerometer = Accelerometer(inMillis:inMillis);
+
+    // TODO: implement startTracking
+    return super.startTracking(inMillis);
+  }
+
+  void setTransformValue(double relativeNull) {}
 
   MovementType getMovementType() {
+    
     return MovementType(fwd: true, left: false, right: false, bwd: false);
   }
 
@@ -20,7 +32,7 @@ class Movement extends SensorType {
     return SensorVector3(x: 10, y: 15, z: 2);
   }
 
-  List<double> getVelocity(LengthUnit lengthUnit){
+  List<double> getVelocity(LengthUnit lengthUnit) {
     List<double> velo = [];
     velo.add(22.5);
     velo.add(25.7);
@@ -32,7 +44,7 @@ class Movement extends SensorType {
     return 22.5;
   }
 
-  Future<bool> listenOnVelocity(double threshold) async{
+  Future<bool> listenOnVelocity(double threshold) async {
     await Future.delayed(const Duration(milliseconds: 500));
     return true;
   }
