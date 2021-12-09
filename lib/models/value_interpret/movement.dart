@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:sensor_library/models/enums/length_unit.dart';
 import 'package:sensor_library/models/raw_sensors/accelerometer.dart';
 import 'package:sensor_library/models/return_types/movement_type.dart';
@@ -18,9 +19,47 @@ class Movement extends TimeSeries {
 
   void setTransformValue(double relativeNull) {}
 
-  MovementType getMovementType() {
-    
-    return MovementType(fwd: true, left: false, right: false, bwd: false);
+  Stream<MovementType> getMovementType() {
+    return mapSensorVectorToMovementType(accelerometer.getRaw());
+  }
+
+  Stream<MovementType> mapSensorVectorToMovementType(Stream<SensorVector3> event) {
+    return event
+        .asyncMap((event) {
+          if(isFwdMovement(event)){
+            return MovementType(fwd: true, left: false, right: false, bwd: false);
+          } else if(isBwdMovement(event)){
+            return MovementType(fwd: false, left: false, right: false, bwd: true);
+          } else if(isLeftMovement(event)){
+            return MovementType(fwd: false, left: true, right: false, bwd: false);
+          } else if(isRightMovement(event)){
+            return MovementType(fwd: false, left: false, right: true, bwd: false);
+          } else {
+            return MovementType(fwd: false, left: false, right: false, bwd: false);
+          }
+        });
+  }
+
+  bool isFwdMovement(SensorVector3 vector){
+    return vector.x > 1 && !sideMmntBiggerThanDirMmnt(vector);
+  }
+
+  bool isBwdMovement(SensorVector3 vector){
+    return vector.x < -1 && !sideMmntBiggerThanDirMmnt(vector);
+  }
+
+  bool isLeftMovement(SensorVector3 vector){
+    return vector.y < -1 && sideMmntBiggerThanDirMmnt(vector);
+  }
+
+  bool isRightMovement(SensorVector3 vector){
+    return vector.y > 1 && sideMmntBiggerThanDirMmnt(vector);
+  }
+
+  bool sideMmntBiggerThanDirMmnt(SensorVector3 vector){
+    var sideMovement = vector.y.abs();
+    var dirMovement = vector.x.abs();
+    return sideMovement > dirMovement;
   }
 
   Future<bool> listenOnDirection(MovementType movementType) async {
