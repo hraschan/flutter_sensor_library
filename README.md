@@ -37,3 +37,34 @@ const like = 'sample';
 TODO: Tell users more about the package: where to find more information, how to 
 contribute to the package, how to file issues, what response they can expect 
 from the package authors, and more.
+
+# Position
+
+How to use:
+
+```dart
+
+// Initialize
+Position position = Position(inMillis: callbackTime);
+
+```
+
+## getCurrentHeading
+
+Returns a double with the current heading (0-359, 0 is north)
+
+```dart
+position.getCurrentHeading().forEach((element) {
+      print(element);
+    });
+```
+
+## getCurrentDirection
+
+Returns an Enum with the current direction(North, East, South, West)
+
+```dart
+position.getCurrentDirection().forEach((element) {
+      print(element);
+    });
+```
