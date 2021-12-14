@@ -10,12 +10,13 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
-
 # Position
 
 How to use:
 
 ```dart
+// Import
+import 'package:sensor_library/models/value_interpret/position.dart';
 
 // Initialize
 Position position = Position(inMillis: callbackTime);
