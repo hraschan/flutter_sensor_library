@@ -1,14 +1,77 @@
+import 'dart:async';
 import 'package:sensor_library/models/enums/length_unit.dart';
+import 'package:sensor_library/models/raw_sensors/accelerometer.dart';
 import 'package:sensor_library/models/return_types/movement_type.dart';
 import 'package:sensor_library/models/return_types/sensor_vector_3.dart';
-import 'package:sensor_library/models/sensors/sensor.dart';
-import 'package:sensor_library/models/value_interpret/sensor_type.dart';
+import 'package:sensor_library/models/time_series.dart';
 
-class Movement extends SensorType {
-  void setTransformValue(double relativeNull){}
+class Movement extends TimeSeries {
+  
+  late Accelerometer  accelerometer;
 
-  MovementType getMovementType() {
-    return MovementType(fwd: true, left: false, right: false, bwd: false);
+  @override
+  startTracking(int inMillis) {
+    accelerometer = Accelerometer(inMillis:inMillis);
+
+    // TODO: implement startTracking
+    return super.startTracking(inMillis);
+  }
+
+  Movement(int inMillis){
+    accelerometer = Accelerometer(inMillis: inMillis);
+  }
+
+  void setTransformValue(double relativeNull) {}
+
+  Stream<MovementType> getMovementType() {
+    return mapSensorVectorToMovementType(accelerometer.getRaw());
+  }
+
+  Stream<MovementType> mapSensorVectorToMovementType(Stream<SensorVector3> stream) {
+    return stream
+        .asyncMap((event) {
+          print("X: " + event.x.toString() + "Y: " + event.y.toString());
+          if(isFwdMovement(event)){
+            print("fwd");
+            return MovementType(fwd: true, left: false, right: false, bwd: false);
+          } else if(isBwdMovement(event)){
+            print("bwd");
+            return MovementType(fwd: false, left: false, right: false, bwd: true);
+          } else if(isLeftMovement(event)){
+            print("lwd");
+            return MovementType(fwd: false, left: true, right: false, bwd: false);
+          } else if(isRightMovement(event)){
+            print("rwd");
+            return MovementType(fwd: false, left: false, right: true, bwd: false);
+          } else {
+            print("no movement");
+            return MovementType(fwd: false, left: false, right: false, bwd: false);
+          }
+        });
+  }
+
+  bool isFwdMovement(SensorVector3 vector){
+    return vector.y > 1 && !sideMmntBiggerThanDirMmnt(vector);
+  }
+
+  bool isBwdMovement(SensorVector3 vector){
+    return vector.y < -1 && !sideMmntBiggerThanDirMmnt(vector);
+  }
+
+  bool isLeftMovement(SensorVector3 vector){
+    return vector.x < -1 && sideMmntBiggerThanDirMmnt(vector);
+  }
+
+  bool isRightMovement(SensorVector3 vector){
+    return vector.x > 1 && sideMmntBiggerThanDirMmnt(vector);
+  }
+
+  bool sideMmntBiggerThanDirMmnt(SensorVector3 vector){
+    var vectorYNoGeo = vector.y - 9.809;
+    print("X: " + vector.x.toString() + "Y without geo: " + vectorYNoGeo.toString());
+    var dirMovement = vectorYNoGeo.abs();
+    var sideMovement = vector.x.abs();
+    return sideMovement > dirMovement;
   }
 
   Future<bool> listenOnDirection(MovementType movementType) async {
@@ -20,7 +83,7 @@ class Movement extends SensorType {
     return SensorVector3(x: 10, y: 15, z: 2);
   }
 
-  List<double> getVelocity(LengthUnit lengthUnit){
+  List<double> getVelocity(LengthUnit lengthUnit) {
     List<double> velo = [];
     velo.add(22.5);
     velo.add(25.7);
@@ -32,7 +95,7 @@ class Movement extends SensorType {
     return 22.5;
   }
 
-  Future<bool> listenOnVelocity(double threshold) async{
+  Future<bool> listenOnVelocity(double threshold) async {
     await Future.delayed(const Duration(milliseconds: 500));
     return true;
   }

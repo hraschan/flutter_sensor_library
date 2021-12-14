@@ -1,4 +1,5 @@
-import 'package:sensor_library/models/sensors/sensor.dart';
+
+import 'package:sensor_library/models/raw_sensors/sensor.dart';
 
 class Gps extends Sensor {
 
