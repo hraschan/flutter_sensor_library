@@ -14,11 +14,24 @@ and the Flutter guide for
 
 How to use:
 
+You need to raise the MinSdkVersion for using the Position-based Sensor data.
+
+In File android/app/build.gradle:
+```dart
+defaultConfig {
+   applicationId "com.example.sensor_libary_test_app"
+   minSdkVersion 23
+   targetSdkVersion 30
+   versionCode flutterVersionCode.toInteger()
+   versionName flutterVersionName
+}
+```
+Then you can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
 ```dart
 // Import
 import 'package:sensor_library/models/value_interpret/position.dart';
 
-// Initialize
+// Initialize - for example in initState() lifecycle method
 Position position = Position(inMillis: callbackTime);
 
 ```
