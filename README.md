@@ -10,30 +10,48 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
+# Position
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+How to use:
 
-## Features
+You need to raise the MinSdkVersion for using the Position-based Sensor data.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
+In File android/app/build.gradle:
 ```dart
-const like = 'sample';
+defaultConfig {
+   applicationId "com.example.sensor_libary_test_app"
+   minSdkVersion 23
+   targetSdkVersion 30
+   versionCode flutterVersionCode.toInteger()
+   versionName flutterVersionName
+}
+```
+Then you can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
+```dart
+// Import
+import 'package:sensor_library/models/value_interpret/position.dart';
+
+// Initialize - for example in initState() lifecycle method
+Position position = Position(inMillis: callbackTime);
+
 ```
 
-## Additional information
+## getCurrentHeading
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+Returns a double with the current heading (0-359, 0 is north)
+
+```dart
+position.getCurrentHeading().forEach((element) {
+      print(element);
+    });
+```
+
+## getCurrentDirection
+
+Returns an Enum with the current direction(North, East, South, West)
+
+```dart
+position.getCurrentDirection().forEach((element) {
+      print(element);
+    });
+```
