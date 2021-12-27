@@ -1,10 +1,14 @@
 import 'package:flutter_compass/flutter_compass.dart';
 
+import '../../sensor_library.dart';
 import 'sensor.dart';
 
 class Compass extends Sensor {
   int inMillis;
-  Compass({required this.inMillis});
+  
+  Compass({required this.inMillis}) {
+    Library.checkIfOnWebProject();
+  }
 
   @override
   Stream<CompassEvent> getRaw() {

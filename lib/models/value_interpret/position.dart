@@ -6,11 +6,14 @@ import 'package:sensor_library/models/return_types/direction.dart';
 import 'package:sensor_library/models/time_series.dart';
 import 'package:sensor_library/models/value_interpret/sensor_type.dart';
 
+import '../../sensor_library.dart';
+
 class Position extends TimeSeries {
   late Barometer barometer;
   late Compass compass;
 
   Position({required int inMillis}) {
+    Library.checkIfOnWebProject();
     // barometer = Barometer();
     compass = Compass(inMillis: inMillis);
   }

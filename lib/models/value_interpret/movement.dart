@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:sensor_library/models/enums/length_unit.dart';
 import 'package:sensor_library/models/raw_sensors/accelerometer.dart';
 import 'package:sensor_library/models/return_types/movement_type.dart';
 import 'package:sensor_library/models/return_types/sensor_vector_3.dart';
 import 'package:sensor_library/models/time_series.dart';
+import 'package:sensor_library/sensor_library.dart';
+
 
 class Movement extends TimeSeries {
   
@@ -18,6 +21,7 @@ class Movement extends TimeSeries {
   }
 
   Movement(int inMillis){
+    Library.checkIfOnWebProject();
     accelerometer = Accelerometer(inMillis: inMillis);
   }
 

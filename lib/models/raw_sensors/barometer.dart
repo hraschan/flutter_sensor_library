@@ -1,9 +1,14 @@
 import 'package:flutter_barometer_plugin/flutter_barometer.dart';
 
+import '../../sensor_library.dart';
 import 'sensor.dart';
 
 class Barometer extends Sensor {
   
+  Barometer() {
+    Library.checkIfOnWebProject();
+  }
+
    @override
    Stream<BarometerValue> getRaw()  {
     return FlutterBarometer.currentPressureEvent;
