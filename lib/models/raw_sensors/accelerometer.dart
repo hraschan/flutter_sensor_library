@@ -24,6 +24,10 @@ class Accelerometer extends Sensor {
     });
   }
 
+  Stream<SensorVector3> getRawWithoutTimeLimit() {
+    return mapAccEventsToSensorVector<UserAccelerometerEvent>(userAccelerometerEvents);
+  }
+
   Stream<SensorVector3> getRawWithGravity() {
     var timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
     return mapAccEventsToSensorVector<AccelerometerEvent>(accelerometerEvents).where((element) {

@@ -11,25 +11,66 @@ import 'package:sensor_library/sensor_library.dart';
 
 class Movement extends TimeSeries {
   
-  late Accelerometer  accelerometer;
+  late Accelerometer  _accelerometer; 
+  int inMillis;
+  final SensorVector3 _saveVector = SensorVector3(x: 0, y: 0, z: 0);
 
   @override
   startTracking(int inMillis) {
-    accelerometer = Accelerometer(inMillis:inMillis);
+    _accelerometer = Accelerometer(inMillis:inMillis);
+    this.inMillis = inMillis;
 
     // TODO: implement startTracking
     return super.startTracking(inMillis);
   }
 
-  Movement(int inMillis){
+  Movement({required this.inMillis}){
     Library.checkIfOnWebProject();
-    accelerometer = Accelerometer(inMillis: inMillis);
+    _accelerometer = Accelerometer(inMillis: inMillis);
   }
 
   void setTransformValue(double relativeNull) {}
 
-  Stream<MovementType> getMovementType() {
-    return MovementTypeUtils.mapSensorVectorToMovementType(accelerometer.getRaw());
+  Stream<MovementType> getMovementType(bool interpolatedSinceLastCall) {
+    if(interpolatedSinceLastCall){
+      Stream<SensorVector3> interpolatedStream = _mapSensorVectorToInterpolatedValues(_accelerometer.getRawWithoutTimeLimit());
+      return MovementTypeUtils.mapSensorVectorToMovementType(interpolatedStream);
+    }
+    return MovementTypeUtils.mapSensorVectorToMovementType(_accelerometer.getRaw());
+  }
+
+  Stream<SensorVector3> _mapSensorVectorToInterpolatedValues(Stream<SensorVector3> rawStream){
+    var timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
+    var timestampForCalls = DateTime.now().millisecondsSinceEpoch;
+
+    var mappedStream = rawStream.map((event) {
+      if(DateTime.now().millisecondsSinceEpoch - timestampAtLastCall >
+          inMillis) {
+        print("Is in Time, Vector: " + (_saveVector.x+event.x).toString() + (_saveVector.y+event.y).toString() + (_saveVector.z+event.z).toString());
+        timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
+        var mappedVector = SensorVector3(x: event.x + _saveVector.x, y: event.y + _saveVector.y, z: event.z + _saveVector.z);
+        _saveVector.x = 0;
+        _saveVector.y = 0;
+        _saveVector.z = 0;
+        return mappedVector;
+      } else {
+        _saveVector.x += event.x;
+        _saveVector.y += event.y;
+        _saveVector.z += event.z;
+        return SensorVector3(x: 0, y: 0, z: 0);
+      }
+    });
+
+    return mappedStream.where((event) {
+      if(DateTime.now().millisecondsSinceEpoch - timestampForCalls 
+        > inMillis) {
+        print("----------------TRUE--------------");
+        timestampForCalls = DateTime.now().millisecondsSinceEpoch;
+        return true;
+      }
+      print("------------------FALSE-------------");
+      return false;
+    });
   }
 
   Future<bool> listenOnDirection(MovementType movementType) async {
