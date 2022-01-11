@@ -5,6 +5,7 @@ import 'package:sensor_library/models/raw_sensors/accelerometer.dart';
 import 'package:sensor_library/models/return_types/movement_type.dart';
 import 'package:sensor_library/models/return_types/sensor_vector_3.dart';
 import 'package:sensor_library/models/time_series.dart';
+import 'package:sensor_library/models/utils/movement_type_utils.dart';
 import 'package:sensor_library/sensor_library.dart';
 
 
@@ -28,54 +29,7 @@ class Movement extends TimeSeries {
   void setTransformValue(double relativeNull) {}
 
   Stream<MovementType> getMovementType() {
-    return mapSensorVectorToMovementType(accelerometer.getRaw());
-  }
-
-  Stream<MovementType> mapSensorVectorToMovementType(Stream<SensorVector3> stream) {
-    return stream
-        .asyncMap((event) {
-          print("X: " + event.x.toString() + "Y: " + event.y.toString());
-          if(isFwdMovement(event)){
-            print("fwd");
-            return MovementType(fwd: true, left: false, right: false, bwd: false);
-          } else if(isBwdMovement(event)){
-            print("bwd");
-            return MovementType(fwd: false, left: false, right: false, bwd: true);
-          } else if(isLeftMovement(event)){
-            print("lwd");
-            return MovementType(fwd: false, left: true, right: false, bwd: false);
-          } else if(isRightMovement(event)){
-            print("rwd");
-            return MovementType(fwd: false, left: false, right: true, bwd: false);
-          } else {
-            print("no movement");
-            return MovementType(fwd: false, left: false, right: false, bwd: false);
-          }
-        });
-  }
-
-  bool isFwdMovement(SensorVector3 vector){
-    return vector.y > 1 && !sideMmntBiggerThanDirMmnt(vector);
-  }
-
-  bool isBwdMovement(SensorVector3 vector){
-    return vector.y < -1 && !sideMmntBiggerThanDirMmnt(vector);
-  }
-
-  bool isLeftMovement(SensorVector3 vector){
-    return vector.x < -1 && sideMmntBiggerThanDirMmnt(vector);
-  }
-
-  bool isRightMovement(SensorVector3 vector){
-    return vector.x > 1 && sideMmntBiggerThanDirMmnt(vector);
-  }
-
-  bool sideMmntBiggerThanDirMmnt(SensorVector3 vector){
-    var vectorYNoGeo = vector.y - 9.809;
-    print("X: " + vector.x.toString() + "Y without geo: " + vectorYNoGeo.toString());
-    var dirMovement = vectorYNoGeo.abs();
-    var sideMovement = vector.x.abs();
-    return sideMovement > dirMovement;
+    return MovementTypeUtils.mapSensorVectorToMovementType(accelerometer.getRaw());
   }
 
   Future<bool> listenOnDirection(MovementType movementType) async {

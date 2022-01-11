@@ -14,7 +14,7 @@ class Accelerometer extends Sensor {
   @override
   Stream<SensorVector3> getRaw() {
     var timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
-    return mapAccEventsToSensorVector(accelerometerEvents).where((element) {
+    return mapAccEventsToSensorVector<UserAccelerometerEvent>(userAccelerometerEvents).where((element) {
       if (DateTime.now().millisecondsSinceEpoch - timestampAtLastCall >
           inMillis) {
         timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
@@ -24,9 +24,21 @@ class Accelerometer extends Sensor {
     });
   }
 
-  Stream<SensorVector3> mapAccEventsToSensorVector(
-      Stream<AccelerometerEvent> event) {
-    return event
-        .asyncMap((event) => SensorVector3(x: event.x, y: event.y, z: event.z));
+  Stream<SensorVector3> getRawWithGravity() {
+    var timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
+    return mapAccEventsToSensorVector<AccelerometerEvent>(accelerometerEvents).where((element) {
+      if (DateTime.now().millisecondsSinceEpoch - timestampAtLastCall >
+          inMillis) {
+        timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
+        return true;
+      }
+      return false;
+    });
+  }
+
+  Stream<SensorVector3> mapAccEventsToSensorVector<T>(
+      Stream<T> eventStream) {
+    return eventStream
+        .asyncMap((dynamic event) => SensorVector3(x: event.x, y: event.y, z: event.z));
   }
 }
