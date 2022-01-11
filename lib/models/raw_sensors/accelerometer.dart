@@ -2,9 +2,14 @@ import 'package:sensor_library/models/return_types/sensor_vector_3.dart';
 import 'package:sensor_library/models/raw_sensors/sensor.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+import '../../sensor_library.dart';
+
 class Accelerometer extends Sensor {
   int inMillis;
-  Accelerometer({required this.inMillis});
+  
+  Accelerometer({required this.inMillis}) {
+    Library.checkIfOnWebProject();
+  }
 
   @override
   Stream<SensorVector3> getRaw() {
