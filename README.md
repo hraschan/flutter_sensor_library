@@ -55,3 +55,27 @@ position.getCurrentDirection().forEach((element) {
       print(element);
     });
 ```
+
+# Not interpreted Sensors
+
+## Gyro
+
+```dart
+Gyroscope gyro = Gyroscope(inMillis: intervalInMilliseconds);
+gyro.getRaw().listen((element) {
+   var x = element.x;
+   // ...
+   // Do your magic here
+})
+```
+
+## Light
+
+```dart
+LightSensor lightSensor = LightSensor(inMillis: intervalInMilliseconds);
+lightSensor.getRaw().listen((element) {
+   var value = element;
+   // ...
+   // Do your magic here
+})
+```
