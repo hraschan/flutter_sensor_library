@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:sensor_library/models/enums/length_unit.dart';
 import 'package:sensor_library/models/raw_sensors/accelerometer.dart';
 import 'package:sensor_library/models/return_types/movement_type.dart';
-import 'package:sensor_library/models/return_types/sensor_vector_3.dart';
+import 'package:sensor_library/models/return_types/movement_value.dart';
+import 'package:sensor_library/models/return_types/sensor_vector_4.dart';
+import '../return_types/sensor_vector_3.dart';
 import 'package:sensor_library/models/time_series.dart';
 import 'package:sensor_library/models/utils/movement_type_utils.dart';
 import 'package:sensor_library/sensor_library.dart';
@@ -14,14 +16,18 @@ class Movement extends TimeSeries {
   late Accelerometer  _accelerometer; 
   int inMillis;
   final SensorVector3 _saveVector = SensorVector3(x: 0, y: 0, z: 0);
+  final List<SensorVector4> _vectorList = [];
 
   @override
   startTracking(int inMillis) {
     _accelerometer = Accelerometer(inMillis:inMillis);
     this.inMillis = inMillis;
 
-    // TODO: implement startTracking
-    return super.startTracking(inMillis);
+    _accelerometer.getRaw().forEach((element) {
+      var currentTime = DateTime.now().millisecondsSinceEpoch;
+      var sensorWithTime = SensorVector4(x: element.x, y: element.y, z: element.z, time: currentTime.toDouble());
+      _vectorList.add(sensorWithTime);
+    });
   }
 
   Movement({required this.inMillis}){
@@ -107,19 +113,38 @@ class Movement extends TimeSeries {
     return velo;
   }
 
-  double getAccelerationAtTimestamp(LengthUnit lengthUnit, DateTime timestamp) {
-    return 2.5;
+  MovementValue getAccelerationAtTimestamp(DateTime time) {
+    if(_vectorList.isEmpty){
+      throw Exception("No List to get data from: Recording not started");
+    }
+    var timestamp = time.millisecondsSinceEpoch;
+    var exactElement = SensorVector4(x: 0, y: 0, z: 0, time: 0);
+    try {
+      exactElement = _vectorList.firstWhere((element) => element.time == timestamp);
+    } on StateError {
+      exactElement = _vectorList.firstWhere((element) => (element.time >= timestamp - inMillis) && element.time <= timestamp + inMillis);
+    }
+    return MovementTypeUtils.getHighestAccelerationValue(exactElement);
   }
 
-  double getMaxAcceleration(LengthUnit lengthUnit) {
-    return 6.2;
+  MovementValue getMaxAcceleration() {
+    if(_vectorList.isEmpty){
+      throw Exception("No List to get data from: Recording not started");
+    }
+    return MovementTypeUtils.filterHighestValueFromList(_vectorList);
   }
 
-  double getAvgAcceleration(LengthUnit lengthUnit) {
-    return 4.0;
+  MovementValue getAvgAcceleration() {
+    if(_vectorList.isEmpty){
+      throw Exception("No List to get data from: Recording not started");
+    }
+    return MovementTypeUtils.filterLowestValueFromList(_vectorList);
   }
 
-  double getMinAcceleration(LengthUnit lengthUnit) {
-    return 2.5;
+  MovementValue getMinAcceleration() {
+    if(_vectorList.isEmpty){
+      throw Exception("No List to get data from: Recording not started");
+    }
+    return MovementTypeUtils.filterAverageValueFromList(_vectorList);
   }
 }
