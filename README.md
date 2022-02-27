@@ -58,10 +58,22 @@ position.getCurrentDirection().listen((element) {
 
 ## ```Stream<double>``` getAltitude
 
-Returns a stream of double values for the current altitude from sea level
+Returns a stream of double values for the current altitude from sea level, derived from air pressure and temperature
 
 ```dart
    position.getAltitude().listen((element) {
+      var altitude = element;
+      // ...
+      // Do your magic here
+   }
+```
+
+## ```Stream<double>``` getAltitudeByGPSPosition
+
+Returns a stream of double values for the current altitude from sea level, derived from GPS position
+
+```dart
+   position.getAltitudeByGPSPosition().listen((element) {
       var altitude = element;
       // ...
       // Do your magic here
