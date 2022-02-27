@@ -164,8 +164,8 @@ You can use it in your dart-Files by importing and initializing it - for example
    
    ```dart
       movement.startTracking();
-   ```
-   
+   ```  
+   [Example Usage in our App on Github](https://github.com/hraschan/flutter_sensor_library_app/blob/master/lib/routes/accelerometer_recording_route.dart)
 ### ```MovementValue``` getAccelerationAtTimestamp(DateTime)
    
    Returns direction and amount of movement at the given timestamp.
@@ -175,7 +175,7 @@ You can use it in your dart-Files by importing and initializing it - for example
       bool isNorth = currentMovement.direction == Direction.north;
       double value = currentMovement.value;
    ```
-   
+   [Example Usage in our App on Github](https://github.com/hraschan/flutter_sensor_library_app/blob/master/lib/routes/accelerometer_recording_route.dart)
 ### ```MovementValue``` getMaxAcceleration()
    
    Returns direction and amount of movement of the biggest movement since ```startTracking()``` was called.  
@@ -264,7 +264,7 @@ position.getCurrentHeading().listen((element) {
    // Do your magic here
 });
 ```
-
+[Example Usage in our App on Github](https://github.com/hraschan/flutter_sensor_library_app/blob/master/lib/routes/kompass_route.dart)
 ### ```Stream<double>``` getCurrentHeadingByGPSPosition
    
 See above: The value is not derived from compass sensor but from GPS.
@@ -307,7 +307,7 @@ Returns a stream of double values for the current altitude from sea level, deriv
       // Do your magic here
    })
 ```
-
+[Example Usage in our App on Github](https://github.com/hraschan/flutter_sensor_library_app/blob/master/lib/routes/accelerometer_route.dart)
 ## Barometer
 
 ### ```Stream<BarometerValue>``` getRaw
