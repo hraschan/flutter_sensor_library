@@ -56,6 +56,18 @@ position.getCurrentDirection().forEach((element) {
     });
 ```
 
+## ```Stream<double>``` getAltitude
+
+Returns a stream of double values for the current altitude from sea level
+
+```dart
+   position.getAltitude().listen((element) {
+      var altitude = element;
+      // ...
+      // Do your magic here
+   }
+```
+
 # Not interpreted Sensors
 
 ## Gyro
