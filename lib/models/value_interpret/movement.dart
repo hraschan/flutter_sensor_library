@@ -14,6 +14,7 @@ import 'package:sensor_library/sensor_library.dart';
 class Movement extends TimeSeries {
   
   late Accelerometer  _accelerometer; 
+  late Gps _gps;
   int inMillis;
   final SensorVector3 _saveVector = SensorVector3(x: 0, y: 0, z: 0);
   final List<SensorVector4> _vectorList = [];
@@ -79,21 +80,10 @@ class Movement extends TimeSeries {
     });
   }
 
-  Future<bool> listenOnDirection(MovementType movementType) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return true;
-  }
-
-  SensorVector3 getMovementVector() {
-    return SensorVector3(x: 10, y: 15, z: 2);
-  }
-
-  List<double> getVelocity(LengthUnit lengthUnit) {
-    List<double> velo = [];
-    velo.add(22.5);
-    velo.add(25.7);
-    velo.add(30.2);
-    return velo;
+  Stream<double> getVelocity() {
+    return _gps.getRaw().map((event) {
+      return event.speed;
+    });
   }
 
   double getVelocityAtTimestamp(LengthUnit lengthUnit, DateTime timestamp) {
