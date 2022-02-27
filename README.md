@@ -37,6 +37,12 @@ There is an example application where we showed all of the functionality of this
 
 # Usage informations
 
+## Installation
+
+[pub.dev Page](https://pub.dev/packages/sensor_library)
+
+```flutter pub add sensor_library```
+
 ## Position & GPS
 You need to raise the MinSdkVersion and the compileSdkVersion for using the Position-based Sensor data.
 
