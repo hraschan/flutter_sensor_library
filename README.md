@@ -71,6 +71,9 @@ gyro.getRaw().listen((element) {
 
 ## Light
 
+Return type: ```Stream<int>```
+Fires only when changed
+
 ```dart
 LightSensor lightSensor = LightSensor(inMillis: intervalInMilliseconds);
 lightSensor.getRaw().listen((element) {
@@ -78,4 +81,46 @@ lightSensor.getRaw().listen((element) {
    // ...
    // Do your magic here
 })
+```
+
+## Barometer
+
+Return type: ```Stream<BarometerValue>```
+
+```dart
+   Barometer baro = Barometer(inMillis: intervalInMilliseconds);
+   baro.getRaw().listen((element) {
+      double valueInHectopascal = element.hectopascal;
+      double valueInMMMercury = element.millimeterOfMercury;
+      // ..
+      // Do your magic here
+   });
+```
+
+## Temperature
+
+Return type: ```Stream<double>```
+Fires only when changed
+
+```dart
+   Temperature temp = Temperature(inMillis: intervalInMilliseconds);
+   temp.getRaw().listen((element) {
+      double value = element;
+      // ...
+      // Do your magic here
+   });
+```
+
+## Humidity
+
+Return type: ```Stream<double>```
+Fires only when changed
+
+```dart
+   Humidity hum = Humidity(inMillis: intervalInMilliseconds);
+   hum.getRaw().listen((element) {
+      double value = element;
+      // ...
+      // Do your magic here
+   });
 ```
