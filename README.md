@@ -90,7 +90,7 @@ Return type: ```Stream<BarometerValue>```
 ```dart
    Barometer baro = Barometer(inMillis: intervalInMilliseconds);
    baro.getRaw().listen((element) {
-      double valueInHectopascal = element.hectopascal;
+      double valueInHectopascal = element.hectpascal;
       double valueInMMMercury = element.millimeterOfMercury;
       // ..
       // Do your magic here
