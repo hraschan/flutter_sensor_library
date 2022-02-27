@@ -97,26 +97,35 @@ Position position = Position(inMillis: callbackTime);
 
 ```
 
-### getCurrentHeading
-
-Returns a double with the current heading (0-359, 0 is north)
-
-```dart
-position.getCurrentHeading().listen((element) {
-      print(element);
-    });
-```
-
-### getCurrentDirection
+### ```Stream<Direction>``` getCurrentDirection
 
 Returns an Enum with the current direction(North, East, South, West)
 
 ```dart
 position.getCurrentDirection().listen((element) {
-      print(element);
-    });
+   // e.g.:
+   bool isNorth = element == Direction.north;
+   // ...
+   // Do your magic here
+});
+```
+   
+### ```Stream<double>``` getCurrentHeading
+
+Returns a double with the current heading (0-359, 0 is north)
+
+```dart
+position.getCurrentHeading().listen((element) {
+   var value = element;
+   // ...
+   // Do your magic here
+});
 ```
 
+### ```Stream<double>``` getCurrentHeadingByGPSPosition
+   
+See above: The value is not derived from compass sensor but from GPS.
+   
 ### ```Stream<double>``` getAltitude
 
 Returns a stream of double values for the current altitude from sea level, derived from air pressure and temperature
