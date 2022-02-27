@@ -5,24 +5,21 @@ import 'sensor.dart';
 
 class Barometer extends Sensor {
   
-  Barometer() {
+  int inMillis;
+
+  Barometer({required this.inMillis}) {
     Library.checkIfOnWebProject();
   }
 
-   @override
-   Stream<BarometerValue> getRaw()  {
-    return FlutterBarometer.currentPressureEvent;
-
+  @override
+  Stream<BarometerValue> getRaw() {
+    var timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
+    return FlutterBarometer.currentPressureEvent.where((event) {
+      if (DateTime.now().millisecondsSinceEpoch - timestampAtLastCall > inMillis) {
+        timestampAtLastCall = DateTime.now().millisecondsSinceEpoch;
+        return true;
+      }
+      return false;
+    });
   }
-
-  // @override
-  // startTracking(int inMillis) async {
-  //   var seconds = (inMillis / 1000).round();
-  //   return await BarometerPlugin.startBarometerListener(seconds);
-  // }
-
-  // @override
-  // stopTracking() async {
-  //   return await BarometerPlugin.stopBarometerListener();
-  // }
 }
