@@ -13,6 +13,11 @@ and the Flutter guide for
 
 # Flutter Sensor Library
 
+This is a sensor library for Flutter, containing several native sensors to get raw data from and providing also interpreted data.  
+There is an example application where we showed all of the functionality of this library in use.  
+[Example-App on Github](https://github.com/hraschan/flutter_sensor_library_app)  
+[Download Example-APK for Android](#)
+
    [Usage Informations](#usage-informations)  
    [Interpreted Sensor-Data](#interpreted-sensor-data)  
    &nbsp;&nbsp;&nbsp;[Environment](#environment)  
@@ -174,17 +179,22 @@ You can use it in your dart-Files by importing and initializing it - for example
 ### ```MovementValue``` getMaxAcceleration()
    
    Returns direction and amount of movement of the biggest movement since ```startTracking()``` was called.  
-   Example: see right above.
+   How to: see right above.  
+   [Example Usage in our App on Github](https://github.com/hraschan/flutter_sensor_library_app/blob/master/lib/routes/accelerometer_recording_route.dart)
    
 ### ```MovementValue``` getAvgAcceleration()
    Returns amount of movement of the average movement since ```startTracking()``` was called.  
-   Example: see above.
+   How to: see above.  
+   [Example Usage in our App on Github](https://github.com/hraschan/flutter_sensor_library_app/blob/master/lib/routes/accelerometer_recording_route.dart)
+   
 ### ```MovementValue``` getMinAcceleration()
    Returns direction and amount of movement of the smallest movement since ```startTracking()``` was called.  
-   Example: see above.
+   How to: see above.  
+   [Example Usage in our App on Github](https://github.com/hraschan/flutter_sensor_library_app/blob/master/lib/routes/accelerometer_recording_route.dart)
+   
 ### ```Stream<MovementValue>``` getAcceleration()
    Returns a stream of MovementValues with direction and amount of current movement.  
-   Example: see above.
+   How to: see above.
 ### ```Stream<double>``` getVelocity()
    Returns a Stream of doubles on the current velocity.
    
