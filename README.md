@@ -173,15 +173,46 @@ You can use it in your dart-Files by importing and initializing it - for example
    
 ### ```MovementValue``` getMaxAcceleration()
    
-   Returns direction and amount of movement of the biggest movement since ```startTracking()``` was called.
+   Returns direction and amount of movement of the biggest movement since ```startTracking()``` was called.  
    Example: see right above.
    
 ### ```MovementValue``` getAvgAcceleration()
-   Returns amount of movement of the average movement since ```startTracking()``` was called.
-   Example: see right above.
+   Returns amount of movement of the average movement since ```startTracking()``` was called.  
+   Example: see above.
 ### ```MovementValue``` getMinAcceleration()
-   Returns direction and amount of movement of the biggest movement since ```startTracking()``` was called.
-   Example: see right above.
+   Returns direction and amount of movement of the smallest movement since ```startTracking()``` was called.  
+   Example: see above.
+### ```Stream<MovementValue>``` getAcceleration()
+   Returns a stream of MovementValues with direction and amount of current movement.  
+   Example: see above.
+### ```Stream<double>``` getVelocity()
+   Returns a Stream of doubles on the current velocity.
+   
+   ```dart
+       movement.getVelocity().listen((event) {
+         double value = event;
+         // ..
+         // do your magic here
+      });
+   ```
+### ```Stream<bool>``` listenOnVelocity(double threshold)
+   Not implemented yet.
+
+### ```Stream<MovementType>``` getMovementType(bool interpolatedSinceLastCall)
+   Returns the type of movement the sensor has tracked.   
+   When ```interpolatedSinceLastCall``` is true, the values are gathered since the last call.
+   
+   ```dart
+       movement.getMovementType(true).listen((event) {
+         var isForwardMovement = event.fwd;
+         // ...
+         // do your magic here
+      });
+   ```
+### ```void``` setTransformValue(double relativeNull)
+   NOT SUPPORTED YET.  
+   Sets the relative zero for all captured data.
+
 ## Position
 
 You can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
