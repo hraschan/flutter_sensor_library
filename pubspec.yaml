@@ -13,6 +13,7 @@ dependencies:
   sensors_plus:
   flutter_compass: '^0.7.0'
   light: ^2.1.0
+  environment_sensors: ^0.2.0
 
 
 
