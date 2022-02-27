@@ -13,9 +13,9 @@ and the Flutter guide for
 
 # Flutter Sensor Library
 
-[Usage Informations](#usage-informations)
-[Interpreted Sensor-Data](#interpreted-sensor-data)
-[Not interpreted / Raw Sensors]()
+   [Usage Informations](#usage-informations)
+   [Interpreted Sensor-Data](#interpreted-sensor-data)
+   [Not interpreted / Raw Sensors](#not-interpreted--raw-sensors)
 
 
 # Usage informations
