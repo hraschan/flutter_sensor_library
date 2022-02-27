@@ -179,7 +179,20 @@ Returns a stream of double values for the current altitude from sea level, deriv
 
 ## GPS
 
-Not supported yet.
+### ```Stream<GPSPosition>``` getRaw
+   
+```dart
+Gps gps = Gps(inMillis: intervalInMilliseconds);
+gps.getRaw().listen((element) {
+   var altitude = element.altitude;
+   var heading = element.heading;
+   var speed = element.speed;
+   var latitude = element.latitude;
+   var longitude = element.longitude;
+   // ...
+   // Do your magic here
+})
+```
 
 ## Gyroscope
 
