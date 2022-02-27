@@ -14,7 +14,7 @@ and the Flutter guide for
 
 How to use:
 
-You need to raise the MinSdkVersion for using the Position-based Sensor data.
+You need to raise the MinSdkVersion and the compileSdkVersion for using the Position-based Sensor data.
 
 In File android/app/build.gradle:
 ```dart
