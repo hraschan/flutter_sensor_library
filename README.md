@@ -195,7 +195,7 @@ Returns a stream of double values for the current altitude from sea level, deriv
 
 ## GPS
 
-### ```Stream<GPSPosition>``` getRaw
+### ```Stream<GpsPosition>``` getRaw
    
 ```dart
 Gps gps = Gps(inMillis: intervalInMilliseconds);
