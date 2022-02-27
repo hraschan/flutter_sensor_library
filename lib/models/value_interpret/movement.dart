@@ -37,7 +37,9 @@ class Movement extends TimeSeries {
     _accelerometer = Accelerometer(inMillis: inMillis);
   }
 
-  void setTransformValue(double relativeNull) {}
+  void setTransformValue(double relativeNull) {
+    throw UnimplementedError("SetTransformValue not supported yet.");
+  }
 
   Stream<MovementType> getMovementType(bool interpolatedSinceLastCall) {
     if(interpolatedSinceLastCall){
@@ -88,12 +90,11 @@ class Movement extends TimeSeries {
   }
 
   double getVelocityAtTimestamp(LengthUnit lengthUnit, DateTime timestamp) {
-    return 22.5;
+    throw UnimplementedError("Get Velocity At Timestamp not implemented yet.");
   }
 
-  Future<bool> listenOnVelocity(double threshold) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return true;
+  Stream<bool> listenOnVelocity(double threshold) {
+    throw UnimplementedError("Listen On Velocity not implemented yet.");
   }
 
   Stream<MovementValue> getAcceleration(LengthUnit lengthUnit) {
