@@ -402,7 +402,14 @@ lightSensor.getRaw().listen((element) {
 
 ## Proximity / LIDAR
 
-Not supported yet.
+### ```Stream<int>``` getRaw
+   
+   Fires only on changes  
+   Returns 1 if nearer than 1cm, else 0.
+   
+   ```dart
+      prox.getRawWithoutTimelimit().listen((event) {print(event);});
+   ```
 
 ## Temperature
 
