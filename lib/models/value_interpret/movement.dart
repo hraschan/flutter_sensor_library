@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:sensor_library/models/enums/length_unit.dart';
 import 'package:sensor_library/models/raw_sensors/accelerometer.dart';
+import 'package:sensor_library/models/raw_sensors/gps.dart';
 import 'package:sensor_library/models/return_types/movement_type.dart';
 import 'package:sensor_library/models/return_types/movement_value.dart';
 import 'package:sensor_library/models/return_types/sensor_vector_4.dart';
