@@ -41,7 +41,7 @@ Position position = Position(inMillis: callbackTime);
 Returns a double with the current heading (0-359, 0 is north)
 
 ```dart
-position.getCurrentHeading().forEach((element) {
+position.getCurrentHeading().listen((element) {
       print(element);
     });
 ```
@@ -51,7 +51,7 @@ position.getCurrentHeading().forEach((element) {
 Returns an Enum with the current direction(North, East, South, West)
 
 ```dart
-position.getCurrentDirection().forEach((element) {
+position.getCurrentDirection().listen((element) {
       print(element);
     });
 ```
@@ -70,7 +70,54 @@ Returns a stream of double values for the current altitude from sea level
 
 # Not interpreted Sensors
 
-## Gyro
+## Accelerometer
+
+### ```Stream<SensorVector3>``` getRaw
+
+```dart
+   Accelerometer acc = Accelerometer(inMillis: intervalInMilliseconds);
+   acc.getRaw().listen((element) {
+      var x = element.x;
+      // ...
+      // Do your magic here
+   })
+```
+
+## Barometer
+
+### ```Stream<BarometerValue>``` getRaw
+
+```dart
+   Barometer baro = Barometer(inMillis: intervalInMilliseconds);
+   baro.getRaw().listen((element) {
+      double valueInHectopascal = element.hectpascal;
+      double valueInMMMercury = element.millimeterOfMercury;
+      // ..
+      // Do your magic here
+   });
+```
+
+## Compass
+
+### ```Stream<CompassEvent>``` getRaw
+
+```dart
+   Compass compass = Compass(inMillis: intervalInMilliseconds);
+   compass.getRaw().listen((element) {
+      double heading = element.heading;
+      double accuracy = element.accuracy;
+      // ..
+      // Do your magic here
+   });
+```
+
+## GPS
+
+Not supported yet.
+
+## Gyroscope
+
+### ```Stream<SensorVector3>``` getRaw
 
 ```dart
 Gyroscope gyro = Gyroscope(inMillis: intervalInMilliseconds);
@@ -79,6 +126,20 @@ gyro.getRaw().listen((element) {
    // ...
    // Do your magic here
 })
+```
+
+## Humidity
+
+### ```Stream<double>``` getRaw
+Fires only when changed
+
+```dart
+   Humidity hum = Humidity(inMillis: intervalInMilliseconds);
+   hum.getRaw().listen((element) {
+      double value = element;
+      // ...
+      // Do your magic here
+   });
 ```
 
 ## Light
@@ -95,42 +156,18 @@ lightSensor.getRaw().listen((element) {
 })
 ```
 
-## Barometer
+## Proximity
 
-Return type: ```Stream<BarometerValue>```
-
-```dart
-   Barometer baro = Barometer(inMillis: intervalInMilliseconds);
-   baro.getRaw().listen((element) {
-      double valueInHectopascal = element.hectpascal;
-      double valueInMMMercury = element.millimeterOfMercury;
-      // ..
-      // Do your magic here
-   });
-```
+Not supported yet.
 
 ## Temperature
 
-Return type: ```Stream<double>```
+### ```Stream<double>``` getRaw
 Fires only when changed
 
 ```dart
    Temperature temp = Temperature(inMillis: intervalInMilliseconds);
    temp.getRaw().listen((element) {
-      double value = element;
-      // ...
-      // Do your magic here
-   });
-```
-
-## Humidity
-
-Return type: ```Stream<double>```
-Fires only when changed
-
-```dart
-   Humidity hum = Humidity(inMillis: intervalInMilliseconds);
-   hum.getRaw().listen((element) {
       double value = element;
       // ...
       // Do your magic here
