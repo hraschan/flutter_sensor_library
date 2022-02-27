@@ -30,6 +30,54 @@ android {
    }
 }
 ```
+
+## using GPS Data:
+
+If you want to use GPS-Data, you need to grant location-permissions in your Android (Manifest) or iOS App.
+
+### Permissions - Android
+
+On Android you'll need to add either the ACCESS_COARSE_LOCATION or the ACCESS_FINE_LOCATION permission to your Android Manifest. To do so open the AndroidManifest.xml file (located under android/app/src/main) and add one of the following two lines as direct children of the <manifest> tag (when you configure both permissions the ACCESS_FINE_LOCATION will be used by the geolocator plugin):
+
+```dart
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+```
+Starting from Android 10 you need to add the ACCESS_BACKGROUND_LOCATION permission (next to the ACCESS_COARSE_LOCATION or the ACCESS_FINE_LOCATION permission) if you want to continue receiving updates even when your App is running in the background (note that the geolocator plugin doesn't support receiving an processing location updates while running in the background):
+
+   
+```dart
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+```
+NOTE Specifying the ACCESS_COARSE_LOCATION permission results in location updates with an accuracy approximately equivalent to a city block. It might take a long time (minutes) before you will get your first locations fix as ACCESS_COARSE_LOCATION will only use the network services to calculate the position of the device.
+   
+### Permissions - iOS
+   
+On iOS you'll need to add the following entries to your Info.plist file (located under ios/Runner) in order to access the device's location. Simply open your Info.plist file and add the following (make sure you update the description so it is meaningfull in the context of your App):
+
+```
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs access to location when open.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>This app needs access to location when in the background.</string>
+```
+
+If you would like to receive updates when your App is in the background, you'll also need to add the Background Modes capability to your XCode project (Project > Signing and Capabilities > "+ Capability" button) and select Location Updates. Be careful with this, you will need to explain in detail to Apple why your App needs this when submitting your App to the AppStore. If Apple isn't satisfied with the explanation your App will be rejected.
+
+When using the requestTemporaryFullAccuracy({purposeKey: "YourPurposeKey"}) method, a dictionary should be added to the Info.plist file.
+```
+<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+<dict>
+  <key>YourPurposeKey</key>
+  <string>The example App requires temporary access to the device&apos;s precise location.</string>
+</dict>
+```
+The second key (in this example called YourPurposeKey) should match the purposeKey that is passed in the requestTemporaryFullAccuracy() method. It is possible to define multiple keys for different features in your app. More information can be found in Apple's documentation.
+
+NOTE: the first time requesting temporary full accuracy access it might take several seconds for the pop-up to show. This is due to the fact that iOS is determining the exact user location which may take several seconds. Unfortunately this is out of our hands.
+
+## Usage
+   
 Then you can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
 ```dart
 // Import
