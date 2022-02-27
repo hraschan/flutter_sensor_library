@@ -138,13 +138,13 @@ class Movement extends TimeSeries {
     if(_vectorList.isEmpty){
       throw Exception("No List to get data from: Recording not started");
     }
-    return MovementTypeUtils.filterLowestValueFromList(_vectorList);
+    return MovementTypeUtils.filterAverageValueFromList(_vectorList);
   }
 
   MovementValue getMinAcceleration() {
     if(_vectorList.isEmpty){
       throw Exception("No List to get data from: Recording not started");
     }
-    return MovementTypeUtils.filterAverageValueFromList(_vectorList);
+    return MovementTypeUtils.filterLowestValueFromList(_vectorList);
   }
 }
