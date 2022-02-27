@@ -11,6 +11,13 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
+# Flutter Sensor Library
+
+[Usage Informations](#usage-informations)
+[Interpreted Sensor-Data](#interpreted-sensor-data)
+[Not interpreted / Raw Sensors]()
+
+
 # Usage informations
 
 ## Position & GPS
@@ -134,7 +141,7 @@ Returns a stream of double values for the current altitude from sea level, deriv
    }
 ```
 
-# Not interpreted Sensors
+# Not interpreted / Raw Sensors
 
 ## Accelerometer
 
