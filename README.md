@@ -10,10 +10,10 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
-# Position
 
-How to use:
+# Usage informations
 
+## Position & GPS
 You need to raise the MinSdkVersion and the compileSdkVersion for using the Position-based Sensor data.
 
 In File android/app/build.gradle:
@@ -31,7 +31,7 @@ android {
 }
 ```
 
-## using GPS Data:
+## GPS only:
 
 If you want to use GPS-Data, you need to grant location-permissions in your Android (Manifest) or iOS App.
 
@@ -76,9 +76,11 @@ The second key (in this example called YourPurposeKey) should match the purposeK
 
 NOTE: the first time requesting temporary full accuracy access it might take several seconds for the pop-up to show. This is due to the fact that iOS is determining the exact user location which may take several seconds. Unfortunately this is out of our hands.
 
-## Usage
+# Interpreted Sensor-Data
    
-Then you can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
+## Position
+
+You can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
 ```dart
 // Import
 import 'package:sensor_library/models/value_interpret/position.dart';
@@ -88,7 +90,7 @@ Position position = Position(inMillis: callbackTime);
 
 ```
 
-## getCurrentHeading
+### getCurrentHeading
 
 Returns a double with the current heading (0-359, 0 is north)
 
@@ -98,7 +100,7 @@ position.getCurrentHeading().listen((element) {
     });
 ```
 
-## getCurrentDirection
+### getCurrentDirection
 
 Returns an Enum with the current direction(North, East, South, West)
 
@@ -108,7 +110,7 @@ position.getCurrentDirection().listen((element) {
     });
 ```
 
-## ```Stream<double>``` getAltitude
+### ```Stream<double>``` getAltitude
 
 Returns a stream of double values for the current altitude from sea level, derived from air pressure and temperature
 
@@ -120,7 +122,7 @@ Returns a stream of double values for the current altitude from sea level, deriv
    }
 ```
 
-## ```Stream<double>``` getAltitudeByGPSPosition
+### ```Stream<double>``` getAltitudeByGPSPosition
 
 Returns a stream of double values for the current altitude from sea level, derived from GPS position
 
