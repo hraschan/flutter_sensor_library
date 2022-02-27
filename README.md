@@ -84,6 +84,48 @@ The second key (in this example called YourPurposeKey) should match the purposeK
 NOTE: the first time requesting temporary full accuracy access it might take several seconds for the pop-up to show. This is due to the fact that iOS is determining the exact user location which may take several seconds. Unfortunately this is out of our hands.
 
 # Interpreted Sensor-Data
+  
+## Environment
+   
+   You can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
+   
+   ```dart
+   // Import
+   import 'package:sensor_library/models/value_interpret/environment.dart';
+
+   // Initialize - for example in initState() lifecycle method
+   Environment env = Environment(inMillis: callbackTime);
+
+   ```
+   
+### ```void``` startTracking
+   
+   Initializes the tracking of the brightness values from light sensor. Once you started the tracking, you can receive max, min and avg value since tracking started or receive the brightness at a given timestamp.
+   Not supported for Proximity / LIDAR-sensor.
+   
+   ```dart
+      env.startTracking();
+   ```
+   
+### ```TimeValue``` getMaxBrightness
+   
+   Returns the maximum value and timestamp of brightness since ```startTracking()``` was started.
+   
+   ```dart
+      env.getMaxBrightness();
+   ```
+   
+### ```TimeValue``` getMinBrightness
+   Returns the minimum value and timestamp of brightness since ```startTracking()``` was started.
+   Example: see above
+   
+### ```TimeValue``` getAvgBrightness
+   Returns the average value of brightness since ```startTracking()``` was started. Timestamp is not given in this case
+   Example: see above
+   
+### ```TimeValue``` getBrightnessAtTimestamp
+   Returns the value and timestamp of brightness at a given timestamp, when ```startTracking()``` was started before.
+   Example: see above
    
 ## Position
 
@@ -96,6 +138,11 @@ import 'package:sensor_library/models/value_interpret/position.dart';
 Position position = Position(inMillis: callbackTime);
 
 ```
+   
+### ```void``` startTracking
+   
+Not supported yet.  
+Preview: with this method you could track the values of Barometer, Temperature, Compass and Gps-Data and afterwards get Entries by timestamp, get the entry with max, min and average values.
 
 ### ```Stream<Direction>``` getCurrentDirection
 
