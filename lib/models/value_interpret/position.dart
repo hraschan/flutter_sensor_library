@@ -4,6 +4,7 @@ import 'package:flutter_compass/flutter_compass.dart';
 import 'package:sensor_library/models/enums/length_unit.dart';
 import 'package:sensor_library/models/raw_sensors/barometer.dart';
 import 'package:sensor_library/models/raw_sensors/compass.dart';
+import 'package:sensor_library/models/raw_sensors/gps.dart';
 import 'package:sensor_library/models/raw_sensors/temperature.dart';
 import 'package:sensor_library/models/return_types/direction.dart';
 import 'package:sensor_library/models/time_series.dart';
@@ -15,6 +16,7 @@ class Position extends TimeSeries {
   late Barometer barometer;
   late Temperature temperature;
   late Compass compass;
+  late Gps gps;
   int inMillis;
 
   Position({required this.inMillis}) {
@@ -93,6 +95,13 @@ class Position extends TimeSeries {
         return true;
       }
       return false;
+    });
+  }
+
+  Stream<double> getAltitudeByGPSPosition() {
+    gps = Gps(inMillis: inMillis);
+    return gps.getRaw().map((event) {
+      return event.altitude;
     });
   }
 }
