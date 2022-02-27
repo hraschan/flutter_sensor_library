@@ -26,8 +26,7 @@ class Environment extends SensorType {
   }
 
   Future<bool> listenOnProximity(int threshold, bool isApproaching) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return true;
+    throw UnimplementedError("Proximity sensor not available.");
   }
 
   TimeValue getBrightnessAtTimestamp(DateTime time) {

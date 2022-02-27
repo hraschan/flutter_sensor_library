@@ -6,12 +6,13 @@ class Proximity extends Sensor {
 
   Proximity() {
     Library.checkIfOnWebProject();
+    throw UnimplementedError("Proximity sensor not available.");
   }
 
   @override
   int getRaw() {
     // TODO: implement getRaw
-    throw UnimplementedError();
+    throw UnimplementedError("Proximity sensor not available.");
   }
   
 }

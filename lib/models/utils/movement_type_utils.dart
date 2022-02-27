@@ -81,7 +81,7 @@ class MovementTypeUtils {
     return verticalMovement > sideMovement && verticalMovement > dirMovement;
   }
 
-  static MovementValue getHighestAccelerationValue(SensorVector4 vector){
+  static MovementValue getHighestAccelerationValue(SensorVector3 vector){
     if(_sideMmntBiggerThanOther(vector)){
       var movementType = MovementType(fwd: false, bwd: false, right: vector.x > 0, left: vector.x < 0, up: false, down: false);
       return MovementValue(value: vector.x.abs(), direction: movementType);

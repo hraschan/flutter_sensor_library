@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:sensor_library/models/enums/length_unit.dart';
 import 'package:sensor_library/models/raw_sensors/accelerometer.dart';
+import 'package:sensor_library/models/raw_sensors/gps.dart';
 import 'package:sensor_library/models/return_types/movement_type.dart';
 import 'package:sensor_library/models/return_types/movement_value.dart';
 import 'package:sensor_library/models/return_types/sensor_vector_4.dart';
@@ -14,6 +15,7 @@ import 'package:sensor_library/sensor_library.dart';
 class Movement extends TimeSeries {
   
   late Accelerometer  _accelerometer; 
+  late Gps _gps;
   int inMillis;
   final SensorVector3 _saveVector = SensorVector3(x: 0, y: 0, z: 0);
   final List<SensorVector4> _vectorList = [];
@@ -35,7 +37,9 @@ class Movement extends TimeSeries {
     _accelerometer = Accelerometer(inMillis: inMillis);
   }
 
-  void setTransformValue(double relativeNull) {}
+  void setTransformValue(double relativeNull) {
+    throw UnimplementedError("SetTransformValue not supported yet.");
+  }
 
   Stream<MovementType> getMovementType(bool interpolatedSinceLastCall) {
     if(interpolatedSinceLastCall){
@@ -79,38 +83,24 @@ class Movement extends TimeSeries {
     });
   }
 
-  Future<bool> listenOnDirection(MovementType movementType) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return true;
-  }
-
-  SensorVector3 getMovementVector() {
-    return SensorVector3(x: 10, y: 15, z: 2);
-  }
-
-  List<double> getVelocity(LengthUnit lengthUnit) {
-    List<double> velo = [];
-    velo.add(22.5);
-    velo.add(25.7);
-    velo.add(30.2);
-    return velo;
+  Stream<double> getVelocity() {
+    return _gps.getRaw().map((event) {
+      return event.speed;
+    });
   }
 
   double getVelocityAtTimestamp(LengthUnit lengthUnit, DateTime timestamp) {
-    return 22.5;
+    throw UnimplementedError("Get Velocity At Timestamp not implemented yet.");
   }
 
-  Future<bool> listenOnVelocity(double threshold) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return true;
+  Stream<bool> listenOnVelocity(double threshold) {
+    throw UnimplementedError("Listen On Velocity not implemented yet.");
   }
 
-  List<double> getAcceleration(LengthUnit lengthUnit) {
-    List<double> velo = [];
-    velo.add(2.5);
-    velo.add(5.7);
-    velo.add(6.2);
-    return velo;
+  Stream<MovementValue> getAcceleration(LengthUnit lengthUnit) {
+    return _accelerometer.getRaw().map((event) {
+      return MovementTypeUtils.getHighestAccelerationValue(event);
+    });
   }
 
   MovementValue getAccelerationAtTimestamp(DateTime time) {
@@ -138,13 +128,13 @@ class Movement extends TimeSeries {
     if(_vectorList.isEmpty){
       throw Exception("No List to get data from: Recording not started");
     }
-    return MovementTypeUtils.filterLowestValueFromList(_vectorList);
+    return MovementTypeUtils.filterAverageValueFromList(_vectorList);
   }
 
   MovementValue getMinAcceleration() {
     if(_vectorList.isEmpty){
       throw Exception("No List to get data from: Recording not started");
     }
-    return MovementTypeUtils.filterAverageValueFromList(_vectorList);
+    return MovementTypeUtils.filterLowestValueFromList(_vectorList);
   }
 }

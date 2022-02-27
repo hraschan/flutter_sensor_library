@@ -26,11 +26,6 @@ class Position extends TimeSeries {
     temperature = Temperature(inMillis: inMillis);
   }
 
-  @override
-  startTracking(int inMillis) {
-    // barometer.startTracking(inMillis);
-  }
-
   Stream<Direction> getCurrentDirection() {
     return getCurrentHeading().asyncMap((event) => _mapCurrentDirection(event));
   }
@@ -39,6 +34,12 @@ class Position extends TimeSeries {
     return compass.getRaw().asyncMap((event) => _mapCurrentHeading(event));
   }
 
+  Stream<double> getCurrentHeadingByGPSPosition() {
+    gps = Gps(inMillis: inMillis);
+    return gps.getRaw().map((event) {
+      return event.heading;
+    });
+  }
 
   Direction _mapCurrentDirection(double  heading){
      
