@@ -210,7 +210,7 @@ Fires only when changed
 
 ## Light
 
-Return type: ```Stream<int>```
+### ```Stream<int>``` getRaw
 Fires only when changed
 
 ```dart
