@@ -138,7 +138,50 @@ NOTE: the first time requesting temporary full accuracy access it might take sev
 ### ```TimeValue``` getBrightnessAtTimestamp
    Returns the value and timestamp of brightness at a given timestamp, when ```startTracking()``` was started before.
    Example: see above
+ 
+## Movement
    
+You can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
+   
+   ```dart
+   // Import
+   import 'package:sensor_library/models/value_interpret/movement.dart';
+
+   // Initialize - for example in initState() lifecycle method
+   Movement movement = Movement(inMillis: callbackTime);
+
+   ```
+   
+### ```void``` startTracking()
+   
+   Only supported for Accelerometer Sensor at the moment.
+   Initializes the tracking of the acceleration values. Once you started the tracking, you can receive max, min and avg value since tracking started or receive the acceleration at a given timestamp.
+   
+   ```dart
+      movement.startTracking();
+   ```
+   
+### ```MovementValue``` getAccelerationAtTimestamp(DateTime)
+   
+   Returns direction and amount of movement at the given timestamp.
+   
+   ```dart
+      var currentMovement = movement.getAccelerationAtTimestamp(currentDateTime);
+      bool isNorth = currentMovement.direction == Direction.north;
+      double value = currentMovement.value;
+   ```
+   
+### ```MovementValue``` getMaxAcceleration()
+   
+   Returns direction and amount of movement of the biggest movement since ```startTracking()``` was called.
+   Example: see right above.
+   
+### ```MovementValue``` getAvgAcceleration()
+   Returns amount of movement of the average movement since ```startTracking()``` was called.
+   Example: see right above.
+### ```MovementValue``` getMinAcceleration()
+   Returns direction and amount of movement of the biggest movement since ```startTracking()``` was called.
+   Example: see right above.
 ## Position
 
 You can use it in your dart-Files by importing and initializing it - for example in your initState() lifecycle method:
