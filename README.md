@@ -235,7 +235,7 @@ lightSensor.getRaw().listen((element) {
 })
 ```
 
-## Proximity
+## Proximity / LIDAR
 
 Not supported yet.
 
