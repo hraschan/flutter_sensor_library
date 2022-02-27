@@ -177,6 +177,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  proximity_sensor:
+    dependency: "direct main"
+    description:
+      name: proximity_sensor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   sensors_plus:
     dependency: "direct main"
     description:
