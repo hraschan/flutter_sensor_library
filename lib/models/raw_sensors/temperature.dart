@@ -29,4 +29,8 @@ class Temperature extends Sensor {
       return false;
     });
   }
+
+  Stream<double> getRawWithoutTimelimit() {
+    return _environmentSensors.temperature;
+  }
 }
