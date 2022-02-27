@@ -22,5 +22,9 @@ class Compass extends Sensor {
       return false;
     });
   }
+
+  Stream<CompassEvent> getRawWithoutTimelimit() {
+    return FlutterCompass.events!;
+  }
   
 }

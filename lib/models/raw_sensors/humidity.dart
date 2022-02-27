@@ -1,6 +1,7 @@
 import 'package:environment_sensors/environment_sensors.dart';
 import 'package:flutter/services.dart';
 import 'package:sensor_library/models/raw_sensors/sensor.dart';
+import 'package:sensor_library/sensor_library.dart';
 
 class Humidity extends Sensor {
 
@@ -8,6 +9,7 @@ class Humidity extends Sensor {
   final _environmentSensors = EnvironmentSensors();
 
   Humidity({required this.inMillis}) {
+    Library.checkIfOnWebProject();
     checkIfAvailable();
   }
 
