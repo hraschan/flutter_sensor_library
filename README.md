@@ -13,9 +13,21 @@ and the Flutter guide for
 
 # Flutter Sensor Library
 
-   [Usage Informations](#usage-informations)  
+   [Usage Informations](#usage-informations) 
    [Interpreted Sensor-Data](#interpreted-sensor-data)  
+   &nbsp;&nbsp;&nbsp;[Environment](#environment)
+   &nbsp;&nbsp;&nbsp;[Movement](#movement)
+   &nbsp;&nbsp;&nbsp;[Position](#position)
    [Not interpreted / Raw Sensors](#not-interpreted--raw-sensors)  
+   &nbsp;&nbsp;&nbsp;[Accelerometer](#accelerometer)
+   &nbsp;&nbsp;&nbsp;[Barometer](#barometer)
+   &nbsp;&nbsp;&nbsp;[Compass](#compass)
+   &nbsp;&nbsp;&nbsp;[GPS](#gps)
+   &nbsp;&nbsp;&nbsp;[Gyroscope](#gyroscope)
+   &nbsp;&nbsp;&nbsp;[Humidity](#humidity)
+   &nbsp;&nbsp;&nbsp;[Light](#light)
+   &nbsp;&nbsp;&nbsp;[Proximity / Lidar](#proximity--lidar)
+   &nbsp;&nbsp;&nbsp;[Temperature](#temperature)
 
 
 # Usage informations
