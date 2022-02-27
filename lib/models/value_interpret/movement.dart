@@ -95,12 +95,10 @@ class Movement extends TimeSeries {
     return true;
   }
 
-  List<double> getAcceleration(LengthUnit lengthUnit) {
-    List<double> velo = [];
-    velo.add(2.5);
-    velo.add(5.7);
-    velo.add(6.2);
-    return velo;
+  Stream<MovementValue> getAcceleration(LengthUnit lengthUnit) {
+    return _accelerometer.getRaw().map((event) {
+      return MovementTypeUtils.getHighestAccelerationValue(event);
+    });
   }
 
   MovementValue getAccelerationAtTimestamp(DateTime time) {
