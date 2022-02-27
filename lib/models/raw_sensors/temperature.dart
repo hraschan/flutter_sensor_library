@@ -2,12 +2,15 @@ import 'package:environment_sensors/environment_sensors.dart';
 import 'package:flutter/services.dart';
 import 'package:sensor_library/models/raw_sensors/sensor.dart';
 
+import '../../sensor_library.dart';
+
 class Temperature extends Sensor {
 
   int inMillis;
   final _environmentSensors = EnvironmentSensors();
 
   Temperature({required this.inMillis}) {
+    Library.checkIfOnWebProject();
     checkIfAvailable();
   }
 
@@ -28,5 +31,9 @@ class Temperature extends Sensor {
       }
       return false;
     });
+  }
+
+  Stream<double> getRawWithoutTimelimit() {
+    return _environmentSensors.temperature;
   }
 }

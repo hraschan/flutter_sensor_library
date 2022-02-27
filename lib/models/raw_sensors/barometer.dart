@@ -22,4 +22,8 @@ class Barometer extends Sensor {
       return false;
     });
   }
+
+  Stream<BarometerValue> getRawWithoutTimelimit() {
+    return FlutterBarometer.currentPressureEvent;
+  }
 }
