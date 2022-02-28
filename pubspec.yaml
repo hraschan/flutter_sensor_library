@@ -15,6 +15,7 @@ dependencies:
   light: ^2.1.0
   environment_sensors: ^0.2.0
   geolocator: ^8.0.5
+  proximity_sensor: ^1.0.2
 
 
 
